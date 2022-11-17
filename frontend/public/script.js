@@ -1,7 +1,18 @@
+// import Swiper bundle with all modules installed
+import Swiper from "swiper/bundle";
+
+// import styles bundle
+import "swiper/css/bundle";
+
 console.log("loaded");
 
 const fetchImages = async () => {
-  return fetch("/images").then((data) => data.json());
+  return fetch("/images")
+    .then((data) => data.json())
+    .then((images) => {
+      /*       const swiper = new Swiper(...); */
+      return images;
+    });
 };
 
 const imageComponent = (url, title, uploadDate, phName) => `
@@ -22,7 +33,33 @@ const formComponent = () => `
     </form>
 `;
 
+const initSwiper = () => {
+  const swiper = new Swiper(".swiper", {
+    // Optional parameters
+    direction: "horizontal",
+    loop: true,
+
+    // If we need pagination
+    pagination: {
+      el: ".swiper-pagination",
+    },
+
+    // Navigation arrows
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+
+    // And if we need scrollbar
+    scrollbar: {
+      el: ".swiper-scrollbar",
+    },
+  });
+  console.log(swiper);
+};
+
 const init = async () => {
+  initSwiper();
   const data = await fetchImages();
   console.log(data);
 
